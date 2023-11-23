@@ -9,7 +9,7 @@ import { getLocalStorageData } from "../components/utility/nostr-helper-function
 
 const Checkout = () => {
   const router = useRouter();
-  const [relays, setRelays] = useState([]);
+  const [relays, setRelays] = useState<string[]>([]); // Provide a default value for relays
   const [productData, setProductData] = useState<ProductData | undefined>(
     undefined,
   );
@@ -19,14 +19,14 @@ const Checkout = () => {
 
   useEffect(() => {
     if (!productId) {
-      router.push("/"); // if there isn't a productId, redirect to home page
+      router.push("/"); // if there isn't a productId, redirect to the home page
     }
-  }, []);
+  }, [productId, router]);
 
   useEffect(() => {
     let { relays } = getLocalStorageData();
     setRelays(relays ? relays : ["wss://relay.damus.io", "wss://nos.lol"]);
-  }, []);
+  }, []); // Empty dependency array to run only once when the component mounts
 
   useEffect(() => {
     const pool = new SimplePool();
@@ -39,12 +39,18 @@ const Checkout = () => {
     let productSub = pool.sub(relays, [subParams]);
 
     productSub.on("event", (event) => {
-      const productData = parseTags(event);
-      setProductData(productData);
+      const parsedProductData = parseTags(event);
+      setProductData(parsedProductData);
     });
-  }, [relays]);
+
+    // Clean up the subscription when the component unmounts
+    return () => {
+      productSub.unsubscribe();
+    };
+  }, [relays, productIdString]); // Add dependencies to the dependency array
 
   return <CheckoutPage productData={productData} />;
 };
 
 export default Checkout;
+
