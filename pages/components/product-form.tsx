@@ -274,7 +274,7 @@ export default function NewForm({
             >
               {images.length > 0 ? (
                 images.map((image) => (
-                  <div className="">
+                  <div className="" key={post.id}>
                     <div className="flex flex-row-reverse ">
                       {
                         <ConfirmActionDropdown
