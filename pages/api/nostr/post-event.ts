@@ -63,25 +63,19 @@ const parseProductFormValues = (body: ProductFormValues): ProductFormValues => {
     "location",
     "price",
   ];
-const parsedBody = typeof body === "string" ? JSON.parse(body) : body;
+const parsedBody: ProductFormValues =
+  typeof body === "string" ? JSON.parse(body) : body;
 
 for (const key of expectedKeys) {
-  const matchingPair = parsedBody.find((pair: [string, any]) => pair[0] === key);
+  const matchingPair = Object.entries(parsedBody).find(([k]) => k === key);
 
-  if (
-    !matchingPair ||
-    !Array.isArray(matchingPair) ||
-    matchingPair.length !== 2
-  ) {
-    // Handle the case when the expected key is not found in the parsed body
-    // or the matching pair doesn't have the expected structure.
+  if (!matchingPair || matchingPair[1] === undefined) {
+    throw new Error(`Missing or invalid property: ${key}`);
   }
-
-  const [k, v] = matchingPair;
-  // Do something with k and v
 }
-  }
-  return parsedBody;
+
+return parsedBody;
+
 };
 
 const PostEvent = async (req: NextApiRequest, res: NextApiResponse) => {
