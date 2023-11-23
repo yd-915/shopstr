@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { SimplePool, Sub } from "nostr-tools"; // Import Sub type from nostr-tools
+import { SimplePool, Sub } from "nostr-tools";
 import parseTags, {
   ProductData,
 } from "../components/utility/product-parser-functions";
@@ -42,8 +42,10 @@ const Checkout = () => {
     });
 
     return () => {
-      // Use type assertion to tell TypeScript that unsubscribe exists
-      (productSub as { unsubscribe(): void }).unsubscribe();
+      // Check if 'unsubscribe' method exists before calling it
+      if (productSub && typeof productSub.unsubscribe === "function") {
+        productSub.unsubscribe();
+      }
     };
   }, [relays, productIdString]);
 
@@ -51,4 +53,3 @@ const Checkout = () => {
 };
 
 export default Checkout;
-
