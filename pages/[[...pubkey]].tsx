@@ -104,9 +104,9 @@ const SellerView = () => {
           <LocationDropdown
             className="mt-2"
             placeholder="All"
-            label="Location"
+            id="Location"
             value={selectedLocation}
-            onChange={(event) => {
+            onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
               setSelectedLocation(event.target.value);
             }}
           />
