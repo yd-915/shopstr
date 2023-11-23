@@ -42,10 +42,8 @@ const Checkout = () => {
     });
 
     return () => {
-      // Check if 'unsubscribe' method exists before calling it
-      if (productSub && typeof productSub.unsubscribe === "function") {
-        productSub.unsubscribe();
-      }
+      // Assuming 'close' is the correct method
+      productSub.close();
     };
   }, [relays, productIdString]);
 
