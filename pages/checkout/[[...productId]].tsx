@@ -41,10 +41,10 @@ const Checkout = () => {
       setProductData(parsedProductData);
     });
 
-    return () => {
-      // Assuming 'close' is the correct method
-      productSub.close();
-    };
+    // No manual cleanup needed, assuming the library handles it internally
+
+    // If you have documentation or source code for SimplePool, check there for cleanup details
+
   }, [relays, productIdString]);
 
   return <CheckoutPage productData={productData} />;
