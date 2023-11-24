@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { SimplePool, Sub } from "nostr-tools";
+import { SimplePool } from "nostr-tools";
 import parseTags, {
   ProductData,
 } from "../components/utility/product-parser-functions";
@@ -9,17 +9,19 @@ import { getLocalStorageData } from "../components/utility/nostr-helper-function
 
 const Checkout = () => {
   const router = useRouter();
-  const [relays, setRelays] = useState<string[]>([]);
-  const [productData, setProductData] = useState<ProductData | undefined>(undefined);
+  const [relays, setRelays] = useState([]);
+  const [productData, setProductData] = useState<ProductData | undefined>(
+    undefined,
+  );
 
   const { productId } = router.query;
   const productIdString = productId ? productId[0] : "";
 
   useEffect(() => {
     if (!productId) {
-      router.push("/");
+      router.push("/"); // if there isn't a productId, redirect to home page
     }
-  }, [productId, router]);
+  }, []);
 
   useEffect(() => {
     let { relays } = getLocalStorageData();
@@ -34,18 +36,13 @@ const Checkout = () => {
       kinds: [30402],
     };
 
-    let productSub: Sub<number> = pool.sub(relays, [subParams]);
+    let productSub = pool.sub(relays, [subParams]);
 
     productSub.on("event", (event) => {
-      const parsedProductData = parseTags(event);
-      setProductData(parsedProductData);
+      const productData = parseTags(event);
+      setProductData(productData);
     });
-
-    // No manual cleanup needed, assuming the library handles it internally
-
-    // If you have documentation or source code for SimplePool, check there for cleanup details
-
-  }, [relays, productIdString]);
+  }, [relays]);
 
   return <CheckoutPage productData={productData} />;
 };
