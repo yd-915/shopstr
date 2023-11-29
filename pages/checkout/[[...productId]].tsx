@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { SimplePool } from "nostr-tools";
-import { parseTags, productData } from "../components/utility/product-parser-functions";
+import { parseTags, ProductData } from "../components/utility/product-parser-functions";
 import CheckoutPage from "../components/checkout-page";
 import { getLocalStorageData } from "../components/utility/nostr-helper-functions";
 
@@ -37,12 +37,12 @@ const Checkout = () => {
     let productSub = pool.sub(relays, [subParams]);
 
     productSub.on("event", (event) => {
-      const productData = parseTags(event);
+      const ProductData = parseTags(event);
       setProductData(productData);
     });
   }, [relays]);
 
-  return <CheckoutPage productData={productData} />;
+  return <CheckoutPage ProductData={productData} />;
 };
 
 export default Checkout;
