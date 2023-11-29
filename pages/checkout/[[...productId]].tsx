@@ -42,7 +42,7 @@ const Checkout = () => {
     });
   }, [relays]);
 
-  return <CheckoutPage ProductData={productData} />;
+  return <CheckoutPage productData={productData} />;
 };
 
 export default Checkout;
