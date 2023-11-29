@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { SimplePool } from "nostr-tools";
-import {parseTags, ProductData} from "../components/utility/product-parser-functions";
+import { parseTags, ProductData } from "../components/utility/product-parser-functions";
 import CheckoutPage from "../components/checkout-page";
 import { getLocalStorageData } from "../components/utility/nostr-helper-functions";
 
