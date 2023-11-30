@@ -10,7 +10,6 @@ const Checkout = () => {
   const [relays, setRelays] = useState([]);
   const [productData, setProductData] = useState<productData | null>(null);
 
-
   const { productId } = router.query;
   const productIdString = productId ? productId[0] : "";
 
@@ -20,10 +19,10 @@ const Checkout = () => {
     }
   }, []);
 
- useEffect(() => {
-  let { relays: storedRelays } = getLocalStorageData();
-  setRelays(storedRelays ? storedRelays : ["wss://relay.damus.io", "wss://nos.lol"]);
-}, []);
+  useEffect(() => {
+    let { relays: storedRelays } = getLocalStorageData();
+    setRelays(storedRelays ? storedRelays : ["wss://relay.damus.io", "wss://nos.lol"]);
+  }, []);
 
   useEffect(() => {
     const pool = new SimplePool();
@@ -36,8 +35,8 @@ const Checkout = () => {
     let productSub = pool.sub(relays, [subParams]);
 
     productSub.on("event", (event) => {
-      const productData = parseTags(event);
-      setProductData(productData);
+      const parsedProductData = parseTags(event);
+      setProductData(parsedProductData);
     });
   }, [relays]);
 
