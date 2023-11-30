@@ -8,7 +8,8 @@ import { getLocalStorageData } from "../components/utility/nostr-helper-function
 const Checkout = () => {
   const router = useRouter();
   const [relays, setRelays] = useState([]);
-  const [productData, setProductData] = useState<productData>;
+  const [productData, setProductData] = useState<productData | null>(null);
+
 
   const { productId } = router.query;
   const productIdString = productId ? productId[0] : "";
@@ -19,10 +20,10 @@ const Checkout = () => {
     }
   }, []);
 
-  useEffect(() => {
-    let { relays } = getLocalStorageData();
-    setRelays(relays ? relays : ["wss://relay.damus.io", "wss://nos.lol"]);
-  }, []);
+ useEffect(() => {
+  let { relays: storedRelays } = getLocalStorageData();
+  setRelays(storedRelays ? storedRelays : ["wss://relay.damus.io", "wss://nos.lol"]);
+}, []);
 
   useEffect(() => {
     const pool = new SimplePool();
