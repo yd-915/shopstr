@@ -37,7 +37,7 @@ const Checkout = () => {
     let productSub = pool.sub(relays, [subParams]);
 
     productSub.on("event", (event) => {
-      const ProductData = parseTags(event);
+      const productData = parseTags(event);
       setProductData(productData);
     });
   }, [relays]);
