@@ -8,7 +8,7 @@ import { getLocalStorageData } from "../components/utility/nostr-helper-function
 const Checkout = () => {
   const router = useRouter();
   const [relays, setRelays] = useState([]);
-  const [productData, setProductData] = useState<ProductData | undefined>(
+  const [productData, setProductData] = useState<productData | undefined>(
     undefined,
   );
 
