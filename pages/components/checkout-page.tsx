@@ -1,5 +1,5 @@
 import React from "react";
-import { ProductData } from "./utility/product-parser-functions";
+import { productData } from "./utility/product-parser-functions";
 import { Divider } from "@nextui-org/react";
 import ProductCard from "./utility-components/product-card";
 import CheckoutCard from "./checkout-card";
@@ -7,7 +7,7 @@ import CheckoutCard from "./checkout-card";
 export default function CheckoutPage({
   productData,
 }: {
-  productData: ProductData;
+  productData: productData;
 }) {
   if (!productData) return null;
   const {
